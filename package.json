@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sandeepmistry/node-6lowpan-ble/issues"
   },
-  "homepage": "https://github.com/sandeepmistry/node-6lowpan-ble#readme"
+  "homepage": "https://github.com/sandeepmistry/node-6lowpan-ble#readme",
+  "dependencies": {
+    "bluetooth-hci-socket": "^0.4.2"
+  }
 }
