@@ -18,12 +18,13 @@ var libc = ffi.Library(null, {
   'bind': [ 'int', [ 'int', 'pointer', 'int' ] ],
   'listen': [ 'int', [ 'int', 'int' ]],
   'accept': [ 'int', [ 'int', 'pointer', 'pointer' ] ],
+  'close': [ 'int', [ 'int' ]]
 });
 
 function L2CapServer(options, connectionListener) {
   events.EventEmitter.call(this);
 
-  this._socket = libc.socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP);
+  this._socket = -1;
 
   if (typeof(connectionListener) === 'function') {
     this.on('connect', connectionListener);
@@ -38,6 +39,8 @@ L2CapServer.prototype.listen = function(psm, backlog, callback) {
   address.writeUInt16LE(AF_BLUETOOTH, 0);
   address.writeUInt16LE(psm, 2);
   address.writeUInt8(BDADDR_LE_PUBLIC, 12);
+
+  this._socket = libc.socket(AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP);
 
   var bindResult = libc.bind(this._socket, address, address.length);
 
@@ -74,6 +77,16 @@ L2CapServer.prototype.listen = function(psm, backlog, callback) {
   }
 
   process.nextTick(this._accept.bind(this));
+};
+
+L2CapServer.prototype.close = function(callback) {
+  var result = libc.close(this._socket);
+
+  this._socket = -1;
+
+  if (typeof(callback) === 'function') {
+    callback();
+  }
 };
 
 L2CapServer.prototype._accept = function() {
