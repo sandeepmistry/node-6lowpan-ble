@@ -1,4 +1,5 @@
 var bleno = require('bleno');
+var sixlo = require('6lowpan');
 
 var l2cap = require('./l2cap');
 
@@ -26,6 +27,15 @@ server.on('connection', function(socket) {
 
   socket.on('data', function(data) {
     console.log('socket on -> data');
-    console.log(data.toString('hex'));
+
+    sixlo.parse(data, function(data, error) {
+      console.log(data);
+    });
   });
+});
+
+process.on('SIGINT', function() {
+  server.close();
+  console.log('SIGINT');
+  process.exit();
 });
