@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/sandeepmistry/node-6lowpan-ble#readme",
   "dependencies": {
-    "bluetooth-hci-socket": "^0.4.2"
+    "6lowpan": "0.0.6",
+    "bleno": "^0.3.5",
+    "errno": "^0.1.4",
+    "ffi": "^2.0.0",
+    "ref": "^1.3.2"
   }
 }
