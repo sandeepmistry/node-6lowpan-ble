@@ -18,6 +18,6 @@
   "homepage": "https://github.com/sandeepmistry/node-6lowpan-ble#readme",
   "dependencies": {
     "6lowpan": "0.0.6",
-    "bleno": "^0.3.5"
+    "bleno": "^0.4.0"
   }
 }
